@@ -100,3 +100,48 @@ function countUniqueValues(arr) {
   now we are looking at current index of i which in this case is 3 and by adding 1 to the current index we will get 
   the total numbers of unique elements in that array
 */
+
+/*
+  Write a function called avergaePair. Given a sorted array of integers and a target average, determine if there is a pair of values in the array where the
+  average of the pair equals the target average. There may be more than one pair that matches the average target.
+  averagePair([1, 2, 3], 2.5) // true
+  averagePair([1, 3, 3, 5, 6, 7, 10, 12, 19], 8) // true
+  averagePair([-1, 0, 3, 4, 5, 6], 4.1) // false
+  averagePair([], 4) // false
+*/
+
+function averagePair(arr, target) {
+  let start = 0;
+  let end = arr.length - 1;
+
+  while (start < end) {
+    let avg = (arr[start] + arr[end]) / 2;
+    if (avg === target) return true;
+    else if (avg < target) start++;
+    else end--;
+  }
+  return false;
+}
+
+/*
+  Write a function called isSubsequence which takes in two strings and checks whether the characters in the first string from a subsequence of the
+  characters in the second string. In other words, the function show check whether the characters in the first string apper somewhere in the second 
+  string, without their order changing
+  Eg:
+    isSubsequence('hello' ,'hello world') // true
+    isSubsequence('sing' ,'string') // true
+    isSubsequence('abc' ,'abracadabra') // true
+    isSubsequence('abc' ,'acb') // false
+*/
+
+function isSubsequence(str1, str2) {
+  let i = 0;
+  let j = 0;
+  if (!str1) return true;
+  while (j < str2.length) {
+    if (str2[j] === str1[j]) i++;
+    if (i === str1.length) return true;
+    j++;
+  }
+  return false;
+}
