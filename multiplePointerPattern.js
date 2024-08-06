@@ -145,3 +145,25 @@ function isSubsequence(str1, str2) {
   }
   return false;
 }
+
+/*
+  Given an array of sorted numbers and a target sum, find a pair in the array whose sum is equal to the given target.
+
+  Eg: 
+    pairWithTargetSum([1, 2, 3, 4, 6] ,6) // [1,3] because numbers at index 1 and 3 add up to 6: 2+4
+    pairWithTargetSum([2, 5, 9, 11] ,11) // []
+*/
+
+function pairWithTargetSum(arr, target) {
+  let start = 0;
+  let end = arr.length - 1;
+  let sum = 0;
+
+  while (start < end) {
+    sum = arr[start] + arr[end];
+    if (sum === target) return [start, end];
+    else if (sum > target) end--;
+    else start++;
+  }
+  return [-1, -1];
+}
