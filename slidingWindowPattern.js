@@ -52,8 +52,6 @@ function maxSubarraySum(arr, num) {
   return maxSum;
 }
 
-// console.log(JSON.stringify(maxSubarraySum([1, 2, 5, 2, 8, 1, 5], 2), null, 4));
-
 // sliding window problem 2:
 /*
     Given an array of positive numbers and a positive number 'S', find the length of the smallest contiguous subarray whose sum is greater than or equal to 'S'. 
@@ -128,8 +126,6 @@ function findLongestSubstring(str) {
   return maxLength;
 }
 
-// console.log(JSON.stringify(findLongestSubstring('rithmschool'), null, 4));
-
 function minimumSubArrayLength2(arr, target) {
   const maxItCanBe = arr.length + 1;
   let windowStart = 0;
@@ -152,6 +148,69 @@ function minimumSubArrayLength2(arr, target) {
   return min === maxItCanBe ? 0 : min;
 }
 
-console.log(
-  JSON.stringify(minimumSubArrayLength2([2, 1, 5, 2, 3, 2], 7), null, 4)
-);
+/* 
+  You are visiting a farm to collect fruits. The farm has a single row of fruit trees. You will be given two baskets, and your goal is to pick as 
+  many fruits as possible to be placed in the given baskets.
+
+  You will be given an array of characters where each characters represents a fruit tree. The farm has following restrictions:
+
+  1. Each basket can have only one type of fruit. There is no limit to how many fruit a basket can hold.
+  2. You can start with any tree, but you can't skip a tree once you have started.
+  3. You will pick exactly one fruit from every tree until you cannot, i.e., you will stop when you have to pick from a third fruit type.
+
+  Write a function to return the maximum number of fruits in both baskets.
+
+  Example 1: 
+  Input: Fruit: ['A', 'B', 'C', 'A', 'C']
+  Output: 3
+  Explanation: We can put 2 'C' in one basket and one 'A' in the other from the subarray ['C', 'A', 'C']
+
+  Example 2: 
+  Input: Fruit: ['A', 'B', 'C', 'B', 'B' , 'C']
+  Output: 5
+  Explanation: We can put 3 'B' in one basket and 2 'C' in the other from the subarray ['B', 'C', 'B', 'B', 'C']
+*/
+
+function fruitIntoBasket(arr) {
+  let windowStart = 0;
+  let basket = {};
+  let max = 0;
+
+  for (let windowEnd = 0; windowEnd < arr.length; windowEnd++) {
+    const currentFruit = arr[windowEnd];
+    if (!basket[currentFruit]) {
+      basket[currentFruit] = 1;
+    } else {
+      basket[currentFruit] += 1;
+    }
+
+    while (Object.keys(basket).length > 2) {
+      const firstFruitWePicked = arr[windowStart];
+      basket[firstFruitWePicked] -= 1;
+      if (basket[firstFruitWePicked] === 0) {
+        delete basket[firstFruitWePicked];
+      }
+      windowStart += 1;
+    }
+    max = Math.max(max, windowEnd - windowStart + 1);
+  }
+  return max;
+}
+
+console.log(JSON.stringify(fruitIntoBasket('abcccac'), null, 4));
+
+// function fruitIntoBasket2(arr) {
+//   let windowStart = 0;
+//   let basket = {};
+//   let max = 0;
+
+//   for (let windowEnd = 0; windowEnd < arr.length; windowEnd++) {
+//     const currentFruit = arr[windowEnd];
+//     basket[currentFruit] = windowEnd;
+
+//     if (Object.keys(basket).length > 2) {
+//       delete basket[arr[windowStart]];
+//       windowStart = windowEnd - 1;
+//     }
+//   }
+// }
