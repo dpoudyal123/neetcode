@@ -197,20 +197,48 @@ function fruitIntoBasket(arr) {
   return max;
 }
 
-console.log(JSON.stringify(fruitIntoBasket('abcccac'), null, 4));
+// console.log(JSON.stringify(fruitIntoBasket('abcac'), null, 4));
 
-// function fruitIntoBasket2(arr) {
-//   let windowStart = 0;
-//   let basket = {};
-//   let max = 0;
+function fruitIntoBasket2(arr) {
+  let windowStart = 0;
+  let basket = new Map();
+  let max = 0;
 
-//   for (let windowEnd = 0; windowEnd < arr.length; windowEnd++) {
-//     const currentFruit = arr[windowEnd];
-//     basket[currentFruit] = windowEnd;
+  for (let windowEnd = 0; windowEnd < arr.length; windowEnd++) {
+    const currentFruit = arr[windowEnd];
+    basket.set(currentFruit, windowEnd);
 
-//     if (Object.keys(basket).length > 2) {
-//       delete basket[arr[windowStart]];
-//       windowStart = windowEnd - 1;
-//     }
-//   }
-// }
+    if (basket.size > 2) {
+      let minIndex = Math.min(...basket.values());
+      const furitToRemove = arr[minIndex];
+      basket.delete(furitToRemove);
+      start = minIndex + 1;
+    }
+    max = Math.max(max, windowEnd - windowStart + 1);
+  }
+  return max;
+}
+console.log(JSON.stringify(fruitIntoBasket2('abcac'), null, 4));
+
+function fruitIntoBasket3(fruits) {
+  let windowStart = 0;
+  let basket = {};
+  let max = 0;
+
+  for (let windowEnd = 0; windowEnd < arr.length; windowEnd++) {
+    const currFruit = fruits[windowEnd];
+    basket[currFruit] = windowEnd;
+
+    if (Object.keys(basket).length > 2) {
+      let minIndex = Object.values(basket).reduce(
+        (agg, ele) => (ele < agg ? ele : agg),
+        1000000
+      );
+      const fruitToDel = arr[minIndex];
+      delete basket[fruitToDel];
+      windowStart = minIndex + 1;
+    }
+    max = Math.max(max, windowEnd - windowStart + 1);
+  }
+  return max;
+}
