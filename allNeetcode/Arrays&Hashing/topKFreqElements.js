@@ -18,10 +18,12 @@ function topKFrequent(nums, k) {
     return agg;
   }, {});
   return Object.keys(obj).reduce((agg, key) => {
-    const value = agg[key];
-    if (value > 1 && agg.length >= k) {
+    const value = obj[key];
+    if (value > 1 && agg.length <= k) {
       agg.push(key);
     }
     return agg;
   }, []);
 }
+
+console.log(JSON.stringify(topKFrequent([1, 1, 1, 2, 2, 3], 2), null, 4));
