@@ -38,7 +38,7 @@ function topKFrequent2(nums, k) {
     map.set(i, count + 1);
   }
   for (let [ele, freq] of map) {
-    bucket[freq] = bucket[freq] ? bucket[freq].push(ele) : [ele];
+    bucket[freq] = bucket[freq] ? bucket[freq].add(ele) : new Set().add(ele);
   }
 
   for (let i = bucket.length - 1; i >= 0; i--) {
@@ -48,4 +48,27 @@ function topKFrequent2(nums, k) {
   return result;
 }
 
-console.log(JSON.stringify(topKFrequent2([1, 1, 1, 2, 2, 3], 2), null, 4));
+function topKFrequent3(nums, k) {
+  let map = new Map();
+  let bucket = [],
+    result = [];
+  for (let i of nums) {
+    let count = map.get(i) || 0;
+    map.set(i, count + 1);
+  }
+  for (let [ele, freq] of map) {
+    if (!bucket[freq]) {
+      bucket[freq] = [];
+    }
+    bucket[freq].push(ele);
+  }
+
+  for (let i = bucket.length - 1; i >= 0; i--) {
+    if (bucket[i]) result.push(...bucket[i]);
+    if (result.length >= k) break;
+  }
+  return result;
+}
+
+// console.log(JSON.stringify(topKFrequent2([1, 1, 1, 2, 2, 3], 2), null, 4));
+console.log(JSON.stringify(topKFrequent3([1, 2], 2), null, 4));
