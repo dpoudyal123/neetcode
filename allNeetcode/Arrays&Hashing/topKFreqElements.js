@@ -49,6 +49,7 @@ function topKFrequent2(nums, k) {
 }
 
 function topKFrequent3(nums, k) {
+  // same as topKFrequent2 but without using new Set()
   let map = new Map();
   let bucket = [],
     result = [];
